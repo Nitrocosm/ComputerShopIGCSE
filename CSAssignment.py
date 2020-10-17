@@ -69,7 +69,7 @@ with open('MandatoryFlags.csv') as csv_flags:
                         "Category from PartsList.csv not found in MandatoryFlags.csv! Please add the category in MandatoryFlags.csv or remove category entries from MandatoryParts.csv!")
                     exit()
 
-# Scan mandatory categories
+# Scans mandatory categories, and separates mandatory categories into md and additional categories into ad dictionary
 with open('MandatoryFlags.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
@@ -115,7 +115,7 @@ with open('PartsList.csv') as csv_file:
         mct += 1
         csv_file.seek(0)
 
-#  Same thing as before, but with the optional categories
+#  Same thing as before, but with the additional categories
 with open('PartsList.csv') as csv_file:
     act = 1
     csv_reader = csv.reader(csv_file, delimiter=',')
@@ -146,7 +146,7 @@ with open('PartsList.csv') as csv_file:
             line_count += 1
 
 
-#  It's time for the GUI! yay, kill me!
+#  The Console GUI setup
 choices = {}
 for i in range(0, len(md)):
     print("Choices for mandatory category: " + str(md["MCat{0}".format(i + 1)]))
@@ -171,6 +171,7 @@ for i in range(0, len(md)):
     choices[str(md["MCat{0}".format(i + 1)])] = itemcodeInput
     print('\n')
 
+#This is the screen that shows the parts chosen and the total price currently and offers a choice to pick additional parts (of which is printed out). 
 print("The total of the cart right now:")
 print("\tBase Components: Needed for the computer to function, $200")
 cBuffer = list(choices.items())
@@ -198,6 +199,7 @@ while True:
         print("Invalid Input! Please enter Y for yes or N for no!")
 print("\n")
 
+#This is the code that runs if the user wants to select additional categories. Same as before, but typing null won't save any input in choices dictionary.
 if addFlag:
     for i in range(0, len(ad)):
         print("Choices for additional category: " + str(ad["ACat{0}".format(i + 1)]))
@@ -231,6 +233,7 @@ if addFlag:
             continue
         print('')
 
+#This is the final screen, the number of additional items is determined by subtracting the length of md dictionary from the length of choices dictionary
 print("The final total of the cart:")
 print("\tBase Components: Needed for the computer to function, $200")
 cBuffer = list(choices.items())
